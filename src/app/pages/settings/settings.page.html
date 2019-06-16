@@ -1,0 +1,35 @@
+<ion-header>
+    <ion-toolbar color="dark" class="tool-header">
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title color="light">{{ 'SETTINGS_TITLE' | translate }}</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-list>
+        <ion-list-header>
+            <ion-label>{{ 'SETTINGS_TITLE' | translate }}</ion-label>
+        </ion-list-header>
+        <ion-item>
+            <ion-label>{{ 'SETTINGS_APP_LANG_TITLE' | translate }}</ion-label>
+            <ion-select (ionChange)="valueChanged()" text-wrap [(ngModel)]="settings.lang" placeholder="Select One">
+                <ion-select-option value="en">{{'ENGLISH_LANG_LBL' | translate}}</ion-select-option>
+                <ion-select-option text-wrap value="pt-br">{{'PORTUGUESE_LANG_LBL' | translate}}</ion-select-option>
+            </ion-select>
+        </ion-item>
+        <ion-item>
+            <ion-label>
+                Theme
+            </ion-label>
+            <theme-switch-select [themes]="themes" [disabled]="disabled"></theme-switch-select>
+        </ion-item>
+        <ion-list-header padding style="border-bottom: none">
+            <span>{{'version' | translate}}</span>
+            <span style="float:right">{{appVersion}}</span>
+        </ion-list-header>
+
+
+    </ion-list>
+</ion-content>

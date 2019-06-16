@@ -1,5 +1,7 @@
 {
   "name": "Fancy Car App",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

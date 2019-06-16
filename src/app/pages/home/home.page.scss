@@ -1,0 +1,89 @@
+:host {
+    --page-margin: var(--app-broad-margin);
+    --page-background: var(--app-background-shade);
+    --page-expired-color: var(--ion-color-medium-tint);
+}
+
+.car-deals-wrapper {
+    margin: 10px;
+    .car-deals-title {
+        text-align: start;
+        font-size: 20px;
+        font-weight: 400;
+        text-transform: uppercase;
+        color: var(--ion-color-dark-shade);
+        margin: 0px 0px var(--page-margin);
+        // margin-bottom: 8px !important;
+        font-family: monospace;
+    }
+    .car-deal {
+        --ion-grid-column-padding: 0px;
+        border-radius: var(--app-broad-radius);
+        background-color: var(--ion-color-lightest);
+        margin-bottom: 5px !important;
+        margin-top: 5px !important;
+        &:not(:last-child) {
+            margin-bottom: calc(var(--page-margin) / 2);
+        }
+        .car-logo-wrapper {
+            padding: calc(var(--page-margin) / 4) var(--page-margin) calc(var(--page-margin) / 4) calc(var(--page-margin) / 2);
+            border-right: 2px dashed rgba(var(--ion-color-dark-rgb), .1);
+            .bookmark-icon {
+                position: absolute;
+                left: 0;
+                /* top: var(--page-margin); */
+                font-size: 19px;
+                color: #d9453a;
+            }
+        }
+        .car-info-wrapper {
+            padding-left: var(--page-margin);
+            // padding-left: 16px;
+            padding-right: calc(var(--page-margin) / 2);
+            padding-top: calc(var(--page-margin) / 4);
+            padding-bottom: calc(var(--page-margin) / 4);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            .car-deal-title {
+                margin: 0px;
+                margin-bottom: 5px;
+                color: var(--ion-color-dark-tint);
+                font-size: 20px;
+            }
+            .car-deal-description {
+                margin: 0px;
+                color: var(--ion-color-medium-tint);
+                font-size: 16px;
+            }
+        }
+    }
+    .status-row {
+        --ion-grid-column-padding: 0px;
+        border-bottom: 2px dashed rgba(var(--ion-color-dark-rgb), .1);
+        justify-content: space-between;
+        align-items: center;
+        padding: 0px 5px 5px 5px;
+        .price-col {
+            align-self: center;
+            color: var(--ion-color-green);
+            .stats-icon {
+                font-size: 13px;
+            }
+        }
+        .avail-col {
+            text-align: end;
+            .stock-avail {
+                color: var(--ion-color-green);
+                font-size: 16px;
+                font-weight: 600;
+                letter-spacing: 0.8px;
+            }
+            .no-stock {
+                border-color: var(--page-expired-color);
+                color: var(--page-expired-color);
+                opacity: 0.6;
+            }
+        }
+    }
+}

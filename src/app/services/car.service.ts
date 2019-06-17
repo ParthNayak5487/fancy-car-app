@@ -78,7 +78,6 @@ export class CarService {
           // taskActivities.push(new JobcardTaskActivity(JSON.parse(data)));
           returnDataOption.push(data);
         }
-        // console.log(returnDataOption);
         return returnDataOption;
       })
       .catch(e => console.log(e));

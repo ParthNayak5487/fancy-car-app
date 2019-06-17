@@ -1,5 +1,5 @@
 <ion-header>
-    <ion-toolbar color="dark" class="tool-header">
+    <ion-toolbar color="primary" class="tool-header">
         <ion-buttons slot="start">
             <ion-menu-button></ion-menu-button>
         </ion-buttons>
@@ -14,7 +14,7 @@
         </ion-list-header>
         <ion-item>
             <ion-label>{{ 'SETTINGS_APP_LANG_TITLE' | translate }}</ion-label>
-            <ion-select (ionChange)="valueChanged()" text-wrap [(ngModel)]="settings.lang" placeholder="Select One">
+            <ion-select (ionChange)="valueChanged()" text-wrap [(ngModel)]="settings.lang" placeholder="{{'SELECT_ONE_LBL' | translate}}">
                 <ion-select-option value="en">{{'ENGLISH_LANG_LBL' | translate}}</ion-select-option>
                 <ion-select-option text-wrap value="pt-br">{{'PORTUGUESE_LANG_LBL' | translate}}</ion-select-option>
             </ion-select>
@@ -26,7 +26,7 @@
             <theme-switch-select [themes]="themes" [disabled]="disabled"></theme-switch-select>
         </ion-item>
         <ion-list-header padding style="border-bottom: none">
-            <span>{{'version' | translate}}</span>
+            <span>{{'VERSION_LBL' | translate}}</span>
             <span style="float:right">{{appVersion}}</span>
         </ion-list-header>
 

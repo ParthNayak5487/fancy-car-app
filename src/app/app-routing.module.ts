@@ -9,6 +9,8 @@ const routes: Routes = [
   { path: 'order-details', loadChildren: './pages/order-details/order-details.module#OrderDetailsPageModule' },
   { path: 'settings', loadChildren: './pages/settings/settings.module#SettingsPageModule' },
   { path: 'home-tabs-page', loadChildren: './pages/home-tabs-page/home-tabs-page.module#HomeTabsPageModule' },
+  { path: 'filter-option', loadChildren: './modals/filter-option/filter-option.module#FilterOptionPageModule' },
+  { path: 'car-detail', loadChildren: './pages/car-detail/car-detail.module#CarDetailPageModule' },
 ];
 
 @NgModule({

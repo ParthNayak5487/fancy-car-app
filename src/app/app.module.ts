@@ -24,6 +24,9 @@ import { PipeModule } from './pipes/pipemodule';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { IonicAngularThemeSwitchSelectModule, IonicAngularThemeSwitchService } from 'ionic-angular-theme-switch';
+import { FilterOptionPage } from './modals/filter-option/filter-option.page';
+import { FormsModule } from '@angular/forms';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -34,6 +37,7 @@ export function createTranslateLoader(http: HttpClient) {
   imports: [BrowserModule,
     IonicModule.forRoot(),
     PipeModule,
+    FormsModule,
     HttpClientModule,
     TranslateModule.forChild(),
     IonicStorageModule.forRoot(),
@@ -54,6 +58,7 @@ export function createTranslateLoader(http: HttpClient) {
     DatabaseHelper,
     IonicAngularThemeSwitchService,
     SQLite,
+    SocialSharing,
     HttpInterceptorService,
     Network,
     I18nSwitcherService,

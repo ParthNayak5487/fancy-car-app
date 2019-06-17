@@ -38,9 +38,7 @@ export class SettingsService {
   async insertSettings(data) {
     return this.sql
       .query(SqlQuery.INSERT_SETTINGS, [
-        data.lang ? data.lang : ApplicationSettings.deviceLang,
-        data.saveToGallery ? 'true' : 'false',
-        ''
+        data.lang ? data.lang : ApplicationSettings.deviceLang
       ])
       .then(res => {
         return res;

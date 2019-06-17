@@ -1,9 +1,41 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>order-details</ion-title>
-  </ion-toolbar>
+    <ion-toolbar color="primary">
+        <ion-title>{{'ORDER_DETAIL_TITLE' | translate}}</ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+    <ion-list *ngIf="dataLoaded">
+        <ion-list-header>
+            <ion-label>{{'VIEW_ORDER_HEADER' | translate}}</ion-label>
+        </ion-list-header>
+        <div *ngFor="let order of orderDetails">
+            <ion-item>
+                <ion-label text-wrap>
+                    {{'ORDER_DATE_LBL' | translate}}
+                </ion-label>
+                <ion-note slot="end" text-wrap>{{order.orderDateTime | dateformat : 'MMMM DD, YYYY - HH:mm' }}
+                </ion-note>
+            </ion-item>
+            <ion-item>
+                <ion-label text-wrap>
+                    {{'ORDER_NUMBER_LBL' | translate}}
+                </ion-label>
+                <ion-note slot="end" text-wrap>{{order.oderNumber}}</ion-note>
+            </ion-item>
+            <ion-item lines="full">
+                <ion-label text-wrap>
+                    {{'ORDER_DETAIL_LBL' | translate}}
+                </ion-label>
+                <ion-note slot="end" text-wrap>{{order.carData.model}}</ion-note>
+            </ion-item>
+        </div>
+        <div *ngIf="orderDetails.length === 0">
+            <ion-item lines="none" class="ion-text-center">
+                <ion-label>
+                    {{'NO_ORDER_MSG' | translate}}
+                </ion-label>
+            </ion-item>
+        </div>
+    </ion-list>
 </ion-content>

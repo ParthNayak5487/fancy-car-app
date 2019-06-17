@@ -31,9 +31,7 @@ export class SplashPage implements OnInit {
     public databaseHelper: DatabaseHelper,
     public translateService: TranslateService,
   ) {
-    console.log('this splash device', this.device);
     ApplicationSettings.deviceData = new DeviceData(this.device);
-    console.log('this splash device', this.device);
   }
 
   checkNetwork() {
@@ -52,28 +50,25 @@ export class SplashPage implements OnInit {
   async getServerData() {
     const carServerResponse: ApiResponse = await this.carServer.getAllCarData();
     if (carServerResponse.status === RequestStatus.Success) {
-      console.log('Success response', carServerResponse);
       await this.carService.deleteCarDatabase();
-      await this.carService.insertAllCarData(carServerResponse.data);
-      this.presentLoading(null, false);
-      ApplicationSettings.showToast(
-        this.toastCtrl,
-        this.translation.SUCCESS_SENDING,
-        'success',
-        'top'
-      );
-      this.homePage();
+      this.carService.insertAllCarData(carServerResponse.data);
+
+      setTimeout(() => {
+        ApplicationSettings.showToast(
+          this.toastCtrl,
+          this.translation.SUCCESS_SENDING,
+          'success',
+          'top'
+        );
+        this.homePage();
+      }, 7000);
     } else if (carServerResponse.status === RequestStatus.Fail) {
-      // await this.database.updateInspectionStatusByRespId(this.formData.resp_id, StatusType.Edit);
-      console.log('error', carServerResponse);
       if (carServerResponse.message === 'No internet') {
-        this.presentLoading(null, false);
         //  No internet test
       } else {
         const errorReason = carServerResponse.errorMessage ? carServerResponse.errorMessage + ' ' : ' ';
         const errorReason1 = carServerResponse.statusCode + ' ';
         const errorReason2 = carServerResponse.statusText;
-        this.presentLoading(null, false);
         ApplicationSettings.showErrorToast(
           this.toastCtrl,
           this.translation.FAILED_GETTING_SERVER_DATA + ' ' + errorReason + errorReason1 + errorReason2,
@@ -81,7 +76,6 @@ export class SplashPage implements OnInit {
           'top',
           10000
         );
-        // this.backAction();
       }
     }
   }
@@ -112,24 +106,7 @@ export class SplashPage implements OnInit {
     });
     setTimeout(() => {
       that.checkNetwork();
-      // that.subscribeNetworkChange();
     }, 3000);
   }
-
-  async presentLoading(loadingText: string, show: boolean) {
-    if (show) {
-      this.loading = await this.loadingCtrl.create({
-        spinner: 'lines-small',
-        message: loadingText,
-        cssClass: 'loading'
-      });
-      await this.loading.present();
-    } else {
-      this.loading.dismiss();
-    }
-
-  }
-
-
 
 }

@@ -41,15 +41,7 @@ export class SettingsPage implements OnInit {
     private i18nSwitcherProvider: I18nSwitcherService,
   ) {
 
-
-
-    // this.customPopoverOptions = {
-    //   header: 'Hair Color',
-    //   subHeader: 'Select your hair color',
-    //   message: 'Only select your dominant hair color'
-    // };
     translateService.get(['SAVING_MSG_LOADER']).subscribe(value => {
-      console.log(value);
       this.translation = value;
     });
     this.appVersion = ApplicationSettings.appVersion;
@@ -58,14 +50,12 @@ export class SettingsPage implements OnInit {
   async ngOnInit() {
     this.valueChangedlbl = false;
     const temp = await this.settingServ.getSettings();
-    console.log('temp', temp);
     this.settings.lang = temp ? temp.language : '';
     this.valueChangedlbl = true;
     if (this.platform.is('android')) {
       this.hideMenu = true;
     } else {
       this.hideMenu = false;
-      // this.menuCtrl.swipeEnable(false);
     }
   }
 
@@ -75,22 +65,13 @@ export class SettingsPage implements OnInit {
 
   async valueChanged() {
     if (this.valueChangedlbl) {
-      // this.saveLoading.present();
-      console.log(this.settings);
       await this.settingServ.deleteSettings();
       await this.settingServ.insertSettings(this.settings).then(data => {
-        console.log('Save settings response', data);
         ApplicationSettings.deviceLang = this.settings.lang;
         this.i18nSwitcherProvider.switchLang(ApplicationSettings.deviceLang);
-        // console.log(ApplicationHelper.deviceLang);
-        // console.log(ApplicationHelper.saveToGallery);
-        // this.saveLoading.dismiss();
       }).catch(e => {
-        console.error(e);
         // this.saveLoading.dismiss();
       });
-    } else {
-
     }
   }
 }

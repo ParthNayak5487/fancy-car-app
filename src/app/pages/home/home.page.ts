@@ -1,39 +1,97 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { CarService } from 'src/app/services/car.service';
-import { ApiResponse } from 'src/app/models/api-response';
-import { CarServerService } from 'src/app/services/backend-services/car-server.service';
-import { RequestStatus } from 'src/app/models/enum.enum';
-import { ApplicationSettings } from 'src/app/services/application-settings.service';
-import { ToastController } from '@ionic/angular';
-import { DatabaseHelper } from 'src/app/services/database-helper.service';
 import { CarData } from 'src/app/models/car-data';
 import * as _ from 'lodash';
+import { Router, NavigationEnd } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { SqlQuery } from 'src/app/services/sql-query';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage implements OnInit {
-  carsData: Array<CarData>;
-  offSetValues: any = 10;
+
+export class HomePage implements OnInit, OnEnter, OnDestroy {
+
+  carsData: Array<CarData> = new Array<CarData>();
+  offSetValues: any = 0;
   infinteEvent: any;
+  private subscription: Subscription;
   totalCarDataCount: any;
   dataLoaded = false;
+  filterValues: {
+    brandName: string,
+    available: string
+  };
+  query = '';
+  params = [];
+  showClearFilter = false;
+
   constructor(
-    public carService: CarService
+    public carService: CarService,
+    private router: Router,
   ) {
 
   }
 
-  ngOnInit(): void {
-    // Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    // Add 'implements OnInit' to the class.
-    this.getCarData();
+  public async onEnter(): Promise<void> {
+    // do your on enter page stuff here
+    this.offSetValues = 0;
     this.getTotalCarCount();
+    await this.checkFilters();
   }
 
+  public ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  public async ngOnInit(): Promise<void> {
+    await this.onEnter();
+    this.subscription = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd && event.url === '/home-tabs-page/hometabs/home') {
+        this.onEnter();
+      }
+    });
+  }
+
+  /**
+   * Check filter is applied or not 
+   * If yes then filter data accordingly. 
+   */
+  async checkFilters() {
+    this.filterValues = await this.carService.getFilterData();
+    console.log('in get data filter values', this.filterValues);
+    if (!this.filterValues || (!this.filterValues.brandName && !this.filterValues.available)) {
+      this.offSetValues = 0;
+      this.query = SqlQuery.GET_CAR_DATA_OFFSET;
+      this.params = [];
+      await this.getCarData();
+      this.showClearFilter = false;
+    } else {
+      //  filter condition with or option.
+      if (this.filterValues.brandName && this.filterValues.available) {
+        this.query = SqlQuery.GET_CAR_DATA_FILTER_BOTH;
+        this.params = [this.filterValues.brandName, this.filterValues.available];
+      } else if (this.filterValues.brandName && !this.filterValues.available) {
+        this.query = SqlQuery.GET_CAR_DATA_FILTER_BRAND;
+        this.params = [this.filterValues.brandName];
+      } else if (!this.filterValues.brandName && this.filterValues.available) {
+        this.query = SqlQuery.GET_CAR_DATA_FILTER_AVAILABLE;
+        this.params = [this.filterValues.available];
+      }
+      this.getCarData();
+      this.showClearFilter = true;
+
+    }
+  }
+
+
+  async carDetails(carId: any) {
+    this.router.navigate(['/car-detail', { carId }]);
+
+  }
   async getCarData() {
-    const optionResp: any = await this.carService.getCarDataOffset(this.offSetValues);
+    const optionResp: any = await this.carService.getCarDataOffset(this.offSetValues, this.query, this.params);
     if (this.offSetValues === 0) {
       this.carsData = optionResp;
     } else {
@@ -41,16 +99,14 @@ export class HomePage implements OnInit {
     }
     this.dataLoaded = true;
     this.offSetValues = this.offSetValues + 10;
-    console.log(this.carsData);
   }
 
   async getTotalCarCount() {
     this.totalCarDataCount = await this.carService.getDataCount();
-    console.log(this.totalCarDataCount);
+
   }
 
   async loadData(event) {
-    console.log("event", event);
     this.infinteEvent = event;
     if (this.offSetValues < this.totalCarDataCount) {
       await this.getCarData();
@@ -61,4 +117,18 @@ export class HomePage implements OnInit {
     }
   }
 
+  async filter() {
+    this.carService.updateFilterData(this.filterValues);
+    this.router.navigate(['/filter-option']);
+  }
+
+  async clearFilter() {
+    this.carService.updateFilterData(undefined, true);
+    await this.checkFilters();
+  }
+
+}
+
+export interface OnEnter {
+  onEnter(): Promise<void>;
 }

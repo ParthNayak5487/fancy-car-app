@@ -5,14 +5,13 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { OrderDetailsPage } from './order-details.page';
-import { PipeModule } from 'src/app/pipes/pipemodule';
+import { FilterOptionPage } from './filter-option.page';
 import { TranslateModule } from '@ngx-translate/core';
 
 const routes: Routes = [
   {
     path: '',
-    component: OrderDetailsPage
+    component: FilterOptionPage
   }
 ];
 
@@ -22,9 +21,8 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    TranslateModule.forChild(),
-    PipeModule
+    TranslateModule.forChild()
   ],
-  declarations: [OrderDetailsPage]
+  declarations: [FilterOptionPage]
 })
-export class OrderDetailsPageModule { }
+export class FilterOptionPageModule { }

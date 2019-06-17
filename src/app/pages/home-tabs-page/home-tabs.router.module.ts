@@ -1,10 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-
-import { HomePage } from '../home/home.page';
 import { HomeTabsPage } from './home-tabs-page.page';
-import { SettingsPage } from '../settings/settings.page';
 
 const routes: Routes = [
   {

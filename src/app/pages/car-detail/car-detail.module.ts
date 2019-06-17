@@ -5,14 +5,13 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { OrderDetailsPage } from './order-details.page';
-import { PipeModule } from 'src/app/pipes/pipemodule';
+import { CarDetailPage } from './car-detail.page';
 import { TranslateModule } from '@ngx-translate/core';
 
 const routes: Routes = [
   {
     path: '',
-    component: OrderDetailsPage
+    component: CarDetailPage
   }
 ];
 
@@ -22,9 +21,8 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    TranslateModule.forChild(),
-    PipeModule
+    TranslateModule.forChild()
   ],
-  declarations: [OrderDetailsPage]
+  declarations: [CarDetailPage]
 })
-export class OrderDetailsPageModule { }
+export class CarDetailPageModule { }

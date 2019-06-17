@@ -1,0 +1,39 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-title>
+            {{'FILTER' | translate}}
+        </ion-title>
+
+        <ion-buttons slot="end">
+            <ion-button (click)="onClose()">
+                <ion-icon name="close"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+    <ion-list no-padding *ngIf="dataLoaded">
+        <ion-item class="input-item">
+            <ion-label position="floating"> {{'BRAND_NAME_LBL' | translate}}</ion-label>
+            <ion-select [(ngModel)]="filterValues.brandName" [interfaceOptions]="brandNameAlertOption" interface="alert">
+                <ion-select-option value=""></ion-select-option>
+                <ion-select-option *ngFor="let brand of brandValues" [selected]="brand.make" [value]="brand.make">
+                    {{brand.make}}</ion-select-option>
+            </ion-select>
+        </ion-item>
+        <ion-item class="input-item">
+            <ion-label position="floating"> {{'AVAIAL_LBL' | translate}}</ion-label>
+            <ion-select [(ngModel)]="filterValues.available" [interfaceOptions]="availAlertOption" interface="alert">
+                <ion-select-option value=""></ion-select-option>
+                <ion-select-option value="In Dealership">In Dealership</ion-select-option>
+                <ion-select-option value="Out of stock">Out of stock</ion-select-option>
+                <ion-select-option value="Unavailable">Unavailable</ion-select-option>
+            </ion-select>
+        </ion-item>
+    </ion-list>
+</ion-content>
+<ion-footer>
+    <ion-button (click)="onFilter()" expand="block" shape="round">{{'FILTER_BTN' | translate}}</ion-button>
+</ion-footer>

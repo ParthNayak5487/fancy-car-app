@@ -13,19 +13,6 @@ export class CarData {
 
     available: string;
 
+    price: any;
+
 }
-
-
-// id
-
-// img
-
-// name
-
-// make
-
-// model
-
-// year
-
-// available

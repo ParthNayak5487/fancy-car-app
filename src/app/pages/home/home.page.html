@@ -1,52 +1,70 @@
 <ion-header>
     <ion-toolbar color="primary">
         <ion-title>
-            Find your perfect car
+            {{'HOME_PAGE_TITLE' | translate}}
         </ion-title>
+
+    </ion-toolbar>
+    <ion-toolbar>
+        <ion-note class="car-deals-title" style="padding: 5px; color:black" *ngIf="dataLoaded" slot="start">
+            {{totalCarDataCount}} {{'CARS_LBL' | translate}}
+        </ion-note>
+        <ion-buttons slot="end">
+            <ion-button *ngIf="showClearFilter" (click)="clearFilter()">
+                <ion-icon name="close-circle-outline"></ion-icon>
+                {{'CLEAR_FILTER_LBL' | translate}}
+            </ion-button>
+            <ion-button (click)="filter($event)">
+                <ion-icon name="options"></ion-icon>
+                {{'FILTER_LBL' | translate}}
+            </ion-button>
+        </ion-buttons>
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
     <div *ngIf="dataLoaded">
         <ion-list>
-            <!-- <ion-item-divider sticky>
-                <ion-label>
-                    {{totalCarDataCount}} cars
-                </ion-label>
-            </ion-item-divider> -->
             <div class="car-deals-wrapper" *ngIf="carsData.length > 0">
-                <h3 class="car-deals-title">{{totalCarDataCount}} cars</h3>
                 <div *ngFor="let car of carsData">
-                    <ion-row class="car-deal">
-                        <ion-col class="car-logo-wrapper" size="4">
-                            <img src="https://auto.ndtvimg.com/car-images/big/audi/a3/audi-a3.jpg?v=14">
-                            <ion-icon class="bookmark-icon" name="heart"></ion-icon>
-                        </ion-col>
-                        <ion-col class="car-info-wrapper" size="8">
-                            <h4 class="car-deal-title">
-                                <ion-text class="no-animation">{{car.name}}</ion-text>
-                            </h4>
-                            <p class="car-deal-description">
-                                <ion-text class="no-animation">{{car.make}} | {{car.year}}</ion-text>
-                            </p>
-                        </ion-col>
-                    </ion-row>
-                    <ion-row class="status-row">
-                        <ion-col class="price-col" size="6">
-                            <ion-icon class="stats-icon" src="./assets/icon/dollar.svg"></ion-icon>
-                            <span class="rating-value">
-                <ion-text>10,000</ion-text>
-              </span>
-                        </ion-col>
-                        <ion-col class="avail-col">
-                            <span class="stock-avail" [ngClass]="{'no-stock': car.available != 'In Dealership'}">Out of Stock</span>
-                        </ion-col>
-                    </ion-row>
+                    <div (click)="carDetails(car.id)">
+                        <ion-row class="car-deal">
+                            <ion-col class="car-logo-wrapper" size="4">
+                                <!-- <img src="https://auto.ndtvimg.com/car-images/big/audi/a3/audi-a3.jpg?v=14"> -->
+                                <img src="{{car.img}}">
+                                <ion-icon class="bookmark-icon" name="heart"></ion-icon>
+                            </ion-col>
+                            <ion-col class="car-info-wrapper" size="8">
+                                <h4 class="car-deal-title">
+                                    <ion-text class="no-animation">{{car.name}}</ion-text>
+                                </h4>
+                                <p class="car-deal-description">
+                                    <ion-text class="no-animation">{{car.make}} | {{car.year}}</ion-text>
+                                </p>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row class="status-row">
+                            <ion-col class="price-col" size="6">
+                                <ion-icon class="stats-icon" src="./assets/icon/dollar.svg"></ion-icon>
+                                <span class="rating-value">
+                                    <ion-text>{{car.price}}</ion-text>
+                                </span>
+                            </ion-col>
+                            <ion-col class="avail-col">
+                                <span class="stock-avail" [ngClass]="{ 'no-stock': car.available !='In Dealership' }">{{car.available}}</span>
+                            </ion-col>
+                        </ion-row>
+                    </div>
                     <!--  {{car.available}}-->
                 </div>
             </div>
+            <div *ngIf="carsData.length === 0">
+                <ion-item lines="none" class="ion-text-center">
+                    <ion-label>{{'NO_CARS_MSG' | translate}}</ion-label>
+                </ion-item>
+            </div>
             <ion-infinite-scroll (ionInfinite)="loadData($event)">
-                <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+                <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="{{'LOADING_MORE_MSG' | translate}}">
                 </ion-infinite-scroll-content>
             </ion-infinite-scroll>
         </ion-list>

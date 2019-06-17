@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { HomePage } from './home.page';
+import { TranslateModule } from '@ngx-translate/core';
+import { PipeModule } from 'src/app/pipes/pipemodule';
 
 @NgModule({
   imports: [
@@ -16,8 +18,10 @@ import { HomePage } from './home.page';
         path: '',
         component: HomePage
       }
-    ])
+    ]),
+    TranslateModule.forChild(),
+    PipeModule
   ],
   declarations: [HomePage]
 })
-export class HomePageModule {}
+export class HomePageModule { }

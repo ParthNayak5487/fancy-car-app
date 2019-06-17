@@ -21,19 +21,19 @@ export class DatabaseHelper {
     public http: HttpClient,
     public ts: TranslateService) { }
 
-  async getMasterUpdate() {
-    let masterUpdateData: any;
-    // return this.sql
-    //   .query(SqlQuery.GET_MASTER_UPDATE)
-    //   .then(updateRes => {
-    //     for (let i = 0; i < updateRes.res.rows.length; i++) {
-    //       masterUpdateData = updateRes.res.rows[i]
-    //         ? updateRes.res.rows[i]
-    //         : updateRes.res.rows.item(i);
+  async getDistinctNames() {
+    let brandNames: any = [];
+    return this.sql
+      .query(SqlQuery.GET_NAME_DISTINCT)
+      .then(updateRes => {
+        for (let i = 0; i < updateRes.res.rows.length; i++) {
+          brandNames.push(updateRes.res.rows[i]
+            ? updateRes.res.rows[i]
+            : updateRes.res.rows.item(i));
 
-    //     }
-    //     return masterUpdateData;
-    //   }).catch(e => console.log(e));
+        }
+        return brandNames;
+      }).catch(e => console.log(e));
   }
 
 

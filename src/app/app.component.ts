@@ -8,6 +8,7 @@ import { I18nSwitcherService } from './services/i18n-switcher.service';
 import { SettingsService } from './services/settings/settings.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ApplicationSettings } from './services/application-settings.service';
+import { IonicAngularThemeSwitchService } from 'ionic-angular-theme-switch';
 
 @Component({
   selector: 'app-root',
@@ -27,6 +28,7 @@ export class AppComponent {
     private globalization: Globalization,
     private translate: TranslateService,
     private config: Config,
+    private themeSwitchService: IonicAngularThemeSwitchService
   ) {
     this.initializeApp();
   }
@@ -53,19 +55,17 @@ export class AppComponent {
     this.translate.setDefaultLang('en');
     this.translate.use('en');
     const settings = await this.settingServ.getSettings();
-    console.log('Settings', settings);
     if (settings) {
       ApplicationSettings.deviceLang = settings.language === '' ? await this.getLang() : settings.language;
       this.translate.use(ApplicationSettings.deviceLang);
     } else {
       try {
         ApplicationSettings.deviceLang = await this.getLang();
+        this.themeSwitchService.setTheme();
         this.translate.use(ApplicationSettings.deviceLang);
       } catch (e) {
-        console.log(e);
       }
     }
-    console.log('Device lang', ApplicationSettings.deviceLang);
 
     this.translate.get(['BACK_BUTTON_TEXT']).subscribe(values => {
       if (this.platform.is('ios')) {

@@ -1,0 +1,96 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-title>{{'CAR_DETAIL_LBL' | translate}}</ion-title>
+        <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+            <!-- <ion-button (click)="openNewItemPage()"> -->
+            <ion-button (click)="socialSharing()">
+                <ion-icon slot="icon-only" name="share"></ion-icon>
+            </ion-button>
+            <ion-button>
+                <ion-icon slot="icon-only" name="heart"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <div *ngIf="dataLoaded">
+        <!-- <img style="min-width: 100%; max-height: 40%" src="https://auto.ndtvimg.com/car-images/big/audi/a3/audi-a3.jpg?v=14"> -->
+        <img style="min-width: 100%; max-height: 40%" src="{{carDetail.img}}">
+        <ion-list>
+            <!-- stock id -->
+            <ion-item lines="none">
+                <ion-label text-wrap>
+                    <ion-text text-wrap>
+                        <h2 style="font-weight: bold;">{{'STOCK_ID' | translate}}</h2>
+                    </ion-text>
+                    <ion-text text-wrap>
+                        <p>{{carDetail.id}}</p>
+                    </ion-text>
+                </ion-label>
+            </ion-item>
+            <!-- name -->
+            <ion-item lines="none">
+                <ion-label text-wrap>
+                    <ion-text text-wrap>
+                        <h2 style="font-weight: bold;">{{'CAR_NAME_LBL' | translate}}</h2>
+                    </ion-text>
+                    <ion-text text-wrap>
+                        <p>{{carDetail.name}}</p>
+                    </ion-text>
+                </ion-label>
+            </ion-item>
+            <!-- make -->
+            <ion-item lines="none">
+                <ion-label text-wrap>
+                    <ion-text text-wrap>
+                        <h2 style="font-weight: bold;">{{'MAKE_LBL' | translate}}</h2>
+                    </ion-text>
+                    <ion-text text-wrap>
+                        <p>{{carDetail.make}}</p>
+                    </ion-text>
+                </ion-label>
+            </ion-item>
+            <!-- model -->
+            <ion-item lines="none">
+                <ion-label text-wrap>
+                    <ion-text text-wrap>
+                        <h2 style="font-weight: bold;">{{'MODEL_LBL' | translate}}</h2>
+                    </ion-text>
+                    <ion-text text-wrap>
+                        <p>{{carDetail.model}}</p>
+                    </ion-text>
+                </ion-label>
+            </ion-item>
+            <!-- year -->
+            <ion-item lines="none">
+                <ion-label text-wrap>
+                    <ion-text text-wrap>
+                        <h2 style="font-weight: bold;">{{'YEAR_LBL' | translate}}</h2>
+                    </ion-text>
+                    <ion-text text-wrap>
+                        <p>{{carDetail.year}}</p>
+                    </ion-text>
+                </ion-label>
+            </ion-item>
+            <!-- price -->
+            <ion-item lines="none">
+                <ion-label text-wrap>
+                    <ion-text text-wrap>
+                        <h2 style="font-weight: bold;">{{'PRICE_LBL' | translate}}</h2>
+                    </ion-text>
+                    <ion-text text-wrap>
+                        <p>{{carDetail.price}}</p>
+                    </ion-text>
+                </ion-label>
+            </ion-item>
+        </ion-list>
+    </div>
+</ion-content>
+<ion-footer style="text-align: -webkit-center" *ngIf="dataLoaded">
+    <ion-button *ngIf="carDetail.available === 'In Dealership'" (click)="onBuyClick()" color="green" class="buyBtn" expand="block">{{'BUY_LABEL' | translate}}
+    </ion-button>
+</ion-footer>

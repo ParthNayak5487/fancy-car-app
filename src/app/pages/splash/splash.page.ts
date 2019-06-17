@@ -61,7 +61,7 @@ export class SplashPage implements OnInit {
           'top'
         );
         this.homePage();
-      }, 7000);
+      }, 10000);
     } else if (carServerResponse.status === RequestStatus.Fail) {
       if (carServerResponse.message === 'No internet') {
         //  No internet test
